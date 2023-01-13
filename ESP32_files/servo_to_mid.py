@@ -7,10 +7,12 @@ def swipe_and_center():
     from machine import Pin, PWM
     from utime import sleep_ms
 
-    t_servo= PWM(Pin(22), freq=50)  # top servo, connected to Pin 22
+    t_servo= PWM(Pin(15))
+    t_servo.freq(50) # top servo, connected to Pin 15
     sleep_ms(50)
 
-    b_servo= PWM(Pin(23), freq=50)  # bottom servo, connected to Pin 23
+    b_servo= PWM(Pin(23))
+    b_servo.freq(50)   # bottom servo, connected to Pin 23
     sleep_ms(50)
     
     max_1000to2000us = 106          # Servo duty value for angle -100deg, beyond limit of a 1 to 2ms servo
@@ -19,8 +21,8 @@ def swipe_and_center():
     min_500to2500us = 20            # Servo duty value for angle 100deg, beyond limit of a 0.5 to 2.5ms servo
     mid_pos = 76                    # Servo duty value for angle 0deg, for 1to2ms and 0.5to2.5ms servo
     
-    b_servo.duty(mid_pos)           # servo is set to mid position
-    t_servo.duty(mid_pos)           # servo is set to mid position
+    b_servo.duty_ns(mid_pos)           # servo is set to mid position
+    t_servo.duty_ns(mid_pos)           # servo is set to mid position
     print(f"\nservos set to their middle position")
     sleep_ms(1200)                  # time for the servos to reach the mid position
     
@@ -30,8 +32,8 @@ def swipe_and_center():
     
     print(f"\nservos rotating in steps toward one rotation extreme (CCW, from servo point of view)")
     for i in range(mid_pos, min_500to2500us, -1):        # swipe from mid to min position
-        b_servo.duty(i)
-        t_servo.duty(i)
+        b_servo.duty_ns(i)
+        t_servo.duty_ns(i)
         sleep_ms(80)
     sleep_ms(1000)
     
@@ -50,10 +52,4 @@ def swipe_and_center():
     
     print(f"\nservos are back to their middle position")
     
-
-        
-
-
-
-if __name__ == "__main__":
-    swipe_and_center()
+swipe_and_center()
