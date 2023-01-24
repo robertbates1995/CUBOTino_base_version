@@ -30,12 +30,39 @@ class arm_servo:
         self.mid = b
         self.top = c
         
-
-def servo_settings(): 
+class table_servo:
+    servo = PWM(Pin(16))
+    # arm servo, connected to Pin 16
+    left = int
+    mid = int
+    right = int
     
-    MID = 1845000
-    MAX = 420000
-    MIN = 3270000
+    def move_left(self):
+        self.servo.duty_ns(self.left)
+        sleep_ms(50)
+        print("left")
+        
+    def move_mid(self):
+        self.servo.duty_ns(self.mid)
+        sleep_ms(50)
+        print("mid")
+        
+    def move_right(self):
+        self.servo.duty_ns(self.right)
+        sleep_ms(50)
+        print("right")
+        
+    
+    def __init__(self, a, b, c):
+        self.servo.freq(50)
+        sleep_ms(50)
+        self.left = a
+        self.mid = b
+        self.right = c
+        
+
+def servo_settings():
+    
     
     MID_2 = 1500000
     MIN_2 = 455000
@@ -43,15 +70,25 @@ def servo_settings():
     
     
     #initalize servos
-    arm = arm_servo(1560000,1200000,750000)
+    arm = arm_servo(1560000,1230000,750000)
+    #initalize arm servo
+    table = table_servo(2060000,1230000,750000)
+    #initalize table servo
     #TODO: table_servo = table_servo()
     
-    arm.move_top()
+    #arm.move_top()
+    #sleep_ms(1200)
+    #arm.move_bot()
+    #sleep_ms(1200)
+    #arm.move_mid()
+    #sleep_ms(1200)
+
+    table.move_left()
     sleep_ms(1200)
-    arm.move_mid()
+    table.move_right()
     sleep_ms(1200)
-    arm.move_bot()
+    table.move_mid()
     
     
-    
+
 servo_settings()
